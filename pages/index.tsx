@@ -39,11 +39,23 @@ const Blog: React.FC<Props> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch('http://localhost:3000/api/feed')
-  const feed = await res.json()
-  return {
-    props: { feed },
+  try {
+    const res = await fetch('http://localhost:3000/api/feed')
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+    
+    const feed = await res.json()
+    return {
+      props: { feed },
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      props: { feed: [] }, // Provide a default value in case of an error
+    };
   }
 }
+
 
 export default Blog
