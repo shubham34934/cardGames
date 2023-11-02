@@ -10,8 +10,8 @@ const Header: React.FC = () => {
   return(
     <nav>
       <div className="left">
-        <Link href="/">
-          <a className="bold" data-active={isActive('/')}>
+        <Link href="/user/all">
+          <a className="bold" data-active={isActive('/user/all')}>
             Users
           </a>
         </Link>
@@ -20,8 +20,8 @@ const Header: React.FC = () => {
         </Link>
       </div>
       <div className="right">
-        <Link href="/signup">
-          <a data-active={isActive('/signup')}>+ Add User</a>
+        <Link href="/user/create">
+          <a data-active={isActive('/user/create')}>+ Add User</a>
         </Link>
         <Link href="/game/create">
           <a data-active={isActive('game/create')}>+ Create game</a>

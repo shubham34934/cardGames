@@ -1,15 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../lib/prisma'
+import prisma from '../../../../../lib/prisma'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const gameId = req.query.id
-
   if (req.method === 'GET') {
-    handleGET(gameId, res)
+    // handleGET(turnId, res)
   } else if (req.method === 'DELETE') {
-    handleDELETE(gameId, res)
+    // handleDELETE(turnId, res)
   } else if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
-    handleUPDATE(gameId, res)
+    handleCREATE(req,res)
   }
   else {
     throw new Error(
@@ -18,10 +16,10 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   }
 }
 
-// GET /api/game/:id
-async function handleGET(gameId, res) {
-  const game = await prisma.game.findUnique({
-    where: { id: gameId },
+// GET /api/turn/:id
+async function handleGET(turnId, res) {
+  const turn = await prisma.turn.findUnique({
+    where: { id: turnId },
     include: {
       players: {
         include: {
@@ -34,25 +32,25 @@ async function handleGET(gameId, res) {
       }
     }
   })
-  res.json(game)
+  res.json(turn)
 }
 
 
-// DELETE /api/game/:id
-async function handleDELETE(gameId, res) {
-  const game = await prisma.game.delete({
-    where: { id: gameId },
+// DELETE /api/turn/:id
+async function handleDELETE(turnId, res) {
+  const turn = await prisma.turn.delete({
+    where: { id: turnId },
   })
-  res.json(game)
+  res.json(turn)
 }
 
 
-// POST/PATCH/PUT /api/game/:id
-async function handleUPDATE(gameId, res) {
-  const game = await prisma.game.update({
-    where: { id: gameId },
+// POST/PATCH/PUT /api/turn/:id
+async function handleCREATE(req, res) {
+  const turn = await prisma.turn.create({
     data: {
+      ...req.body
     },
   })
-  res.json(game)
+  res.json(turn)
 }

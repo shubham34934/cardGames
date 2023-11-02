@@ -72,10 +72,10 @@ model Game {
 }
 
 model Turn {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
-  status          Status
-  highestBidder   Player @relation("HighestBidderTurns", fields: [highestBidderId], references: [id])
-  highestBidderId String @db.ObjectId
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  status          Status? @default(IN_PROGRESS) // Set the default value to IN_PROGRESS
+  highestBidder   Player  @relation("HighestBidderTurns", fields: [highestBidderId], references: [id])
+  highestBidderId String  @db.ObjectId
 
   teammates   Player[] @relation("TeammateTurns", fields: [teammateIds], references: [id])
   teammateIds String[] @db.ObjectId

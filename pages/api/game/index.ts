@@ -39,7 +39,7 @@ async function handleCREATE(req, res) {
       ...req.body
     },
   })
-  console.log({game})
+  console.log({game});
   res.json(game)
 }
 

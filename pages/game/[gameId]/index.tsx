@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import ReactMarkdown from 'react-markdown'
-import Layout from '../../components/Layout'
+import Layout from '../../../components/Layout'
 import Router from 'next/router'
 
-async function completeGame(id: number): Promise<void> {
-  await fetch(`http://localhost:3000/api/game/${id}`, {
+async function completeGame(gameId: number): Promise<void> {
+  await fetch(`http://localhost:3000/api/game/${gameId}`, {
     method: 'PUT',
   })
   await Router.push('/')
 }
 
-async function destroyGame(id: number): Promise<void> {
-  await fetch(`http://localhost:3000/api/game/${id}`, {
+async function destroyGame(gameId: number): Promise<void> {
+  await fetch(`http://localhost:3000/api/game/${gameId}`, {
     method: 'DELETE',
   })
   await Router.push('/')
 }
+async function addTurn(gameId: number): Promise<void> {
+  await Router.push(`/game/${gameId}/turn/create`)
+}
 
 const Game: React.FC<any> = props => {
-  console.log(props)
   return (
     <Layout>
       <div>
@@ -31,14 +33,17 @@ const Game: React.FC<any> = props => {
           }))}
         </div>
         <ReactMarkdown children={props.content} />
-        {!props.published && (
+        <button onClick={() => addTurn(props.id)}>
+         + Add Turn
+        </button>
+        <div className='footer'>
           <button onClick={() => completeGame(props.id)}>
             Complete Game
           </button>
-        )}
-        <button onClick={() => destroyGame(props.id)}>
-         + Add Turn
-        </button>
+          <button onClick={() => destroyGame(props.id)}>
+            Delete Game
+          </button>
+        </div>
       </div>
       <style jsx>{`
         .page {
@@ -52,6 +57,9 @@ const Game: React.FC<any> = props => {
 
         .actions {
           margin-top: 2rem;
+        }
+        .footer{
+          margin-top:30px;
         }
 
         button {
@@ -70,7 +78,7 @@ const Game: React.FC<any> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`http://localhost:3000/api/game/${context.params.id}`)
+  const res = await fetch(`http://localhost:3000/api/game/${context.params.gameId}`)
   const data = await res.json()
   return { props: { ...data } }
 }
