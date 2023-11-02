@@ -26,7 +26,7 @@ const SignUp: React.FC = () => {
       <div className="page">
         <form
           onSubmit={submitData}>
-          <h1>Signup user</h1>
+          <h1>Add user</h1>
           <input
             autoFocus
             onChange={e => setName(e.target.value)}
@@ -43,7 +43,7 @@ const SignUp: React.FC = () => {
           <input
             disabled={!name || !email}
             type="submit"
-            value="Signup"
+            value="Add"
           />
           <a className="back" href="#" onClick={() => Router.push('/')}>
             or Cancel

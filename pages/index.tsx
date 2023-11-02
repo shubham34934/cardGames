@@ -1,21 +1,21 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
 import Layout from '../components/Layout'
-import Post, { PostProps } from '../components/Post'
+import User, { UserProps } from '../components/User'
 
 type Props = {
-  feed: PostProps[]
+  users: UserProps[]
 }
 
 const Blog: React.FC<Props> = props => {
   return (
     <Layout>
       <div className="page">
-        <h1>My Blog</h1>
+        <h1>Users</h1>
         <main>
-          {props.feed.map(post => (
-            <div key={post.id} className="post">
-              <Post post={post} />
+          {props.users.map(user => (
+            <div key={user.id} className="post">
+              <User user={user} />
             </div>
           ))}
         </main>
@@ -40,19 +40,19 @@ const Blog: React.FC<Props> = props => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/feed')
+    const res = await fetch('http://localhost:3000/api/user')
     if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
     
-    const feed = await res.json()
+    const users = await res.json()
     return {
-      props: { feed },
+      props: { users },
     }
   } catch (error) {
     console.error("Error fetching data:", error);
     return {
-      props: { feed: [] }, // Provide a default value in case of an error
+      props: { users: [] }, // Provide a default value in case of an error
     };
   }
 }

@@ -12,11 +12,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.15",
+    "@mui/material": "^5.14.15",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.3",
     "@prisma/client": "^3.12.0",
     "next": "12.1.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-markdown": "8.0.2"
+    "react-markdown": "8.0.2",
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@types/node": "16.11.27",
